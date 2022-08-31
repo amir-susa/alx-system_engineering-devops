@@ -1,3 +1,1 @@
-#!/bin/bash
-script that print the absolutr path name of the current working directory
-script that print the absolutr path name of the current working directory
+Move the file betty from /tmp/ to /tmp/my_first_directory
