@@ -1,8 +1,12 @@
 0x19-postmortem
+![image](https://github.com/amir-susa/alx-system_engineering-devops/assets/87572588/9a3c3386-519b-4b80-9d30-639b8c36e031)
 
 Issue Summary
+
 15/05/2023 From 9:15 AM to 10:00 AM UTC+1 all requests for the homepage to our servers got a 404 response
+
 Timeline
+
 9:10 AM : Updates push
 9:15 AM : Noticing the problem
 9:15 AM : Notifying the both front end and backend teams
@@ -15,7 +19,9 @@ Timeline
 10:00 AM : 100% traffic back online with the new updates
 
 Root cause and resolution
+
 Our server uses Apache2, and the error logs for Apache2 didn't provide enough information about the problem, so we traced the apache2 process using strace. When a request is sent, strace tool catches a lot of errors, and after some scanning for these errors we found the error, which is a typo in page file extention. After rolling back changes, we knew that the changes were made by the front end team, so we took the broken changes and ran them on a test server which replicate >
+
 .phpp
 
 instead of
@@ -29,9 +35,12 @@ grep -inR ".phpp" .
 after fixing the error we pushed back the changes and restarted the servers
 
 10:00 AM : 100% of trafic back online with the new updates
+
 Corrective and preventative measures
+
 To prevent similar problems from happening again we will
 
 Create an automated test pipeline for every update push
+
 Add a monitoring software to our servers which will monitor lot of things and one of them Network Traffic resquests and responses and configure it to make an lert to the teams when too much non desired responses were sent like 404
 Create a tests for every new update and the teams shouuld not push until those tests pass
